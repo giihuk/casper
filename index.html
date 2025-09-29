@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0081)file:///Users/augusto.correia/Downloads/HELP%20NOT%20HYPE%20-%20Prompt%20Hub.html -->
-<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HELP NOT HYPE - Prompt Hub</title>
     <style>
@@ -110,6 +110,64 @@
             position: relative;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: #000;
+            color: #FFFF00;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: #FF00FF;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .mobile-menu-btn.active {
+            background: #FF00FF;
+            color: #000;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: currentColor;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active .hamburger span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active .hamburger span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
         /* Module Navigation */
         .module-nav {
             display: flex;
@@ -119,9 +177,116 @@
             flex-wrap: wrap;
         }
 
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-menu-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .mobile-menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-menu-overlay .module-btn {
+            width: 100%;
+            background: #FFFF00;
+            color: #000;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .mobile-menu-overlay .module-btn:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-menu-overlay .module-btn:nth-child(2) { animation-delay: 0.2s; }
+        .mobile-menu-overlay .module-btn:nth-child(3) { animation-delay: 0.3s; }
+        .mobile-menu-overlay .module-btn:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .mobile-menu-overlay .module-btn:hover {
+            background: #FF00FF;
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-overlay .module-btn.active {
+            background: #FF00FF;
+            color: #000;
+            border: 3px solid #FFFF00;
+        }
+
+        .mobile-menu-overlay .base-prompt-global-btn {
+            background: #000;
+            color: #FFFF00;
+            border: 3px solid #FFFF00;
+            padding: 18px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            width: 100%;
+            animation: slideUp 0.5s ease forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .mobile-menu-overlay .base-prompt-global-btn:hover {
+            background: #FFFF00;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* Desktop Menu */
         .module-buttons {
             display: flex;
             gap: 15px;
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
         }
 
         .module-btn {
@@ -133,12 +298,14 @@
             font-weight: 700;
             font-size: 1rem;
             text-transform: uppercase;
-            cursor: pointer; 
-            transition: background-color .25s ease, color .25s ease;}
+            cursor: pointer;
+            transition: background-color .25s ease, color .25s ease;
+        }
 
-        .module-btn:hover { 
+        .module-btn:hover {
             background: #FF00FF;
-            color: #000;}
+            color: #000;
+        }
 
         .module-btn.active {
             background: #FFF;
@@ -194,10 +361,12 @@
         }
 
         /* Mac-style prompt card */
-        .prompt-card {background: #000;
+        .prompt-card {
+            background: #000;
             border-radius: 20px;
             padding: 4px;
-            position: relative; box-shadow: 12px 12px 0 #000;
+            position: relative;
+            box-shadow: 12px 12px 0 #000;
             transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
         }
 
@@ -305,21 +474,21 @@
             width: 100%;
         }
 
-        .single-prompt-card {background: #000;
+        .single-prompt-card {
+            background: #000;
             border-radius: 20px;
             padding: 4px;
-            position: relative; transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
-            border: 4px solid #000
-            border-radius: 20px
+            position: relative;
+            transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
         }
 
-        .single-prompt-card:hover { }
+        .single-prompt-card:hover {}
 
-        .single-prompt-inner {background: #F5F5F5;
+        .single-prompt-inner {
+            background: #F5F5F5;
             border-radius: 16px;
             padding: 40px;
             position: relative;
-            border: 4px solid #000;
         }
 
         .single-prompt-text {
@@ -348,7 +517,9 @@
         }
 
         /* Links Module Styles */
-        .links-grid { display: grid; grid-template-columns: repeat(4, 1fr);
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
             margin-top: 40px;
         }
@@ -385,7 +556,9 @@
             border: 3px solid #FF00FF;
         }
 
-        .link-card:hover { filter: brightness(0.95); }
+        .link-card:hover {
+            filter: brightness(0.95);
+        }
 
         .link-title {
             font-size: 2rem;
@@ -442,7 +615,10 @@
             font-size: 0.95rem;
         }
 
-        .link-button:hover { background:#FF00FF; color:#000; }
+        .link-button:hover {
+            background: #FF00FF;
+            color: #000;
+        }
 
         .link-disclaimer {
             font-size: 1.1rem;
@@ -480,10 +656,10 @@
             width: 90%;
             max-height: 80vh;
             position: relative;
-            animation: slideUp 0.3s ease;
+            animation: slideUpModal 0.3s ease;
         }
 
-        @keyframes slideUp {
+        @keyframes slideUpModal {
             from {
                 transform: translateY(50px);
                 opacity: 0;
@@ -564,44 +740,87 @@
             color: #000;
         }
 
+        /* Rounded CTA buttons for modules 2 and 3 */
+        .cta-rounded {
+            display: inline-block;
+            margin-top: 24px;
+            background: #000;
+            color: #FFFF00;
+            padding: 14px 22px;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 2px solid #000;
+            transition: background-color .25s ease, color .25s ease;
+        }
+
+        .cta-rounded:hover {
+            background: #FF00FF;
+            color: #000;
+        }
+
+        .single-prompt:hover {}
+
+        /* Keep white box fixed; move only the shadow behind for modules 2 & 3 */
+        .single-prompt-card {
+            position: relative;
+            background: transparent;
+            border-radius: 20px;
+            padding: 4px;
+        }
+
+        .single-prompt-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: #000;
+            transform: translate(12px, 12px);
+            transition: transform .25s ease;
+            z-index: -1;
+        }
+
+        .single-prompt-inner {
+            position: relative;
+            z-index: 1;
+            background: #F5F5F5;
+            border-radius: 16px;
+            padding: 40px;
+            border: 4px solid #000;
+        }
+
+        .single-prompt-card:hover::before {
+            transform: translate(16px, 16px);
+        }
+
         /* Mobile Responsive */
         @media (max-width: 1200px) {
             .prompts-wrapper {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .links-grid { display: grid; grid-template-columns: repeat(4, 1fr);
-            }
-
-            .link-card.yellow,
-            .link-card.pink {
-                grid-column: span 1;
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
             }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
+                padding: 80px 20px 30px 20px;
             }
 
             .main-title {
                 font-size: clamp(2.5rem, 10vw, 4rem);
             }
 
+            /* Show mobile menu button */
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            /* Hide desktop navigation */
             .module-nav {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .module-buttons {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .base-prompt-global-btn {
-                margin-left: 0;
-                margin-top: 10px;
-                width: 100%;
+                display: none;
             }
 
             .prompts-wrapper {
@@ -617,85 +836,54 @@
             .link-title {
                 font-size: 1.5rem;
             }
+
+            .links-grid {
+                grid-template-columns: 1fr !important;
+            }
         }
-    
-/* Rounded CTA buttons for modules 2 and 3 */
-.cta-rounded{
-    display:inline-block;
-    margin-top:24px;
-    background:#000;
-    color:#FFFF00;
-    padding:14px 22px;
-    border-radius:9999px;
-    font-weight: 500;
-    text-decoration:none;
-    border:2px solid #000;
-    transition:background-color .25s ease, color .25s ease;
-}
-.cta-rounded:hover{
-    background:#FF00FF; /* effect: only color change */
-    color:#000;
-}
 
-.single-prompt:hover { }
-
-
-/* Keep white box fixed; move only the shadow behind for modules 2 & 3 */
-.single-prompt-card {
-    position: relative;
-    background: transparent; /* shadow handled by ::before */
-    border-radius: 20px;
-    padding: 4px;
-}
-.single-prompt-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    background: #000;
-    transform: translate(12px, 12px); /* initial "shadow" offset */
-    transition: transform .25s ease; z-index: -1;
-}
-.single-prompt-inner {position: relative;
-    z-index: 1; /* stays above the moving shadow */
-    background: #F5F5F5;
-    border-radius: 16px;
-    padding: 40px;
-            border: 4px solid #000;
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
         }
-.single-prompt-card:hover::before {
-    transform: translate(16px, 16px); /* move only the shadow on hover */
-}
 
-
-
-@media (max-width: 768px) {
-    .links-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1199px) {
-    .links-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
-
-@media (min-width: 1200px) {
-    .links-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
-    }
-}
-
-</style>
+        @media (min-width: 1200px) {
+            .links-grid {
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+        }
+    </style>
 </head>
-<body class="">
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-buttons">
+                <button class="module-btn active" onclick="switchModuleMobile(1)">MÓDULO 1</button>
+                <button class="module-btn" onclick="switchModuleMobile(2)">MÓDULO 2</button>
+                <button class="module-btn" onclick="switchModuleMobile(3)">MÓDULO 3</button>
+                <button class="module-btn" onclick="switchModuleMobile(4)">LINKS</button>
+            </div>
+            <button class="base-prompt-global-btn show" onclick="openModalFromMobile()">Prompt Base</button>
+        </div>
+    </div>
+
     <!-- Decorative Elements -->
     <svg class="asterisk-decoration asterisk-1" viewBox="0 0 100 100">
-        <path d="M50 10 L50 90 M10 50 L90 50 M25 25 L75 75 M75 25 L25 75" stroke="#FF00FF" stroke-width="4" fill="none"></path>
+        <path d="M50 10 L50 90 M10 50 L90 50 M25 25 L75 75 M75 25 L25 75" stroke="#FF00FF" stroke-width="4" fill="none"/>
     </svg>
     <svg class="asterisk-decoration asterisk-2" viewBox="0 0 100 100">
-        <path d="M50 10 L50 90 M10 50 L90 50 M25 25 L75 75 M75 25 L25 75" stroke="#000" stroke-width="4" fill="none"></path>
+        <path d="M50 10 L50 90 M10 50 L90 50 M25 25 L75 75 M75 25 L25 75" stroke="#000" stroke-width="4" fill="none"/>
     </svg>
 
     <div class="container">
@@ -703,22 +891,24 @@
             <h1 class="main-title">H<i>E</i>LP, NOT HYPE</h1>
         </header>
 
-        <!-- Module Navigation -->
+        <!-- Desktop Module Navigation -->
         <div class="module-nav">
-            <div class="module-buttons">
-                <button class="module-btn active" onclick="switchModule(1)">MÓDULO 1</button>
-                <button class="module-btn" onclick="switchModule(2)">MÓDULO 2</button>
-                <button class="module-btn" onclick="switchModule(3)">MÓDULO 3</button>
-                <button class="module-btn" onclick="switchModule(4)">LINKS</button>
+            <div class="desktop-nav">
+                <div class="module-buttons">
+                    <button class="module-btn active" onclick="switchModule(1)">MÓDULO 1</button>
+                    <button class="module-btn" onclick="switchModule(2)">MÓDULO 2</button>
+                    <button class="module-btn" onclick="switchModule(3)">MÓDULO 3</button>
+                    <button class="module-btn" onclick="switchModule(4)">LINKS</button>
+                </div>
+                <button class="base-prompt-global-btn show" onclick="openModal()">Prompt Base</button>
             </div>
-            <button class="base-prompt-global-btn show" onclick="openModal()">Prompt Base</button>
         </div>
 
         <!-- Module 1 Content -->
         <div id="module1" class="module-content active">
             <div class="prompts-wrapper">
                 <!-- Prompt Card 1 -->
-                <div class="prompt-card" style="opacity: 1; transform: translateY(0px); transition: 0.5s;">
+                <div class="prompt-card">
                     <div class="prompt-inner">
                         <div class="prompt-header">
                             <h2 class="prompt-title">Café Comunicação Sustentável</h2>
@@ -749,7 +939,7 @@ REQUISITOS TÉCNICOS:
                 </div>
 
                 <!-- Prompt Card 2 -->
-                <div class="prompt-card" style="opacity: 1; transform: translateY(0px); transition: 0.5s;">
+                <div class="prompt-card">
                     <div class="prompt-inner">
                         <div class="prompt-header">
                             <h2 class="prompt-title">Arena 360 - Aplicativo de Treino Esportivo</h2>
@@ -781,7 +971,7 @@ REQUISITOS TÉCNICOS:
                 </div>
 
                 <!-- Prompt Card 3 -->
-                <div class="prompt-card" style="opacity: 1; transform: translateY(0px); transition: 0.5s;">
+                <div class="prompt-card">
                     <div class="prompt-inner">
                         <div class="prompt-header">
                             <h2 class="prompt-title">GlowUp - Marca de Cosméticos Naturais</h2>
@@ -839,7 +1029,7 @@ Sua tarefa é criar o código completo (HTML, CSS e JavaScript) de um aplicativo
     * Utilize **Tailwind CSS** via CDN para a estilização.
     * Utilize a biblioteca **pdf.js** via CDN para a extração de texto do PDF no lado do cliente (no navegador).
     * O JavaScript deve ser robusto, incluindo o tratamento de erros e a lógica para chamar a API do Gemini com prompts específicos para cada tipo de conteúdo.</div>
-<a class="cta-rounded" href="https://g.co/gemini/share/461ea0f23b57" target="_blank">Meu app gerador de posts</a>
+                        <a class="cta-rounded" href="https://g.co/gemini/share/461ea0f23b57" target="_blank">Meu app gerador de posts</a>
                         <button class="copy-button" onclick="copyPrompt(this)" title="Copiar prompt">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -861,7 +1051,7 @@ Sua tarefa é criar o código completo (HTML, CSS e JavaScript) de um aplicativo
 **Conteúdo Mandatório:** Cobrir os atributos do produto, seus diferenciais competitivos e as instruções para participar.
 **Tom de Voz:** Usar a linguagem exata do público-alvo. Se o produto é jovem e descolado, o roteiro deve ser assim.
 **CTA (Call to Action):** O final precisa deixar claro o que o ouvinte deve fazer.</div>
-<a class="cta-rounded" href="https://notebooklm.google.com/notebook/c3f068b9-8f43-4afa-ba92-52c8f29cdccf" target="_blank">Podcast gerado com NotebooLM</a>
+                        <a class="cta-rounded" href="https://notebooklm.google.com/notebook/c3f068b9-8f43-4afa-ba92-52c8f29cdccf" target="_blank">Podcast gerado com NotebooLM</a>
                         <button class="copy-button" onclick="copyPrompt(this)" title="Copiar prompt">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -907,7 +1097,7 @@ Sua tarefa é criar o código completo (HTML, CSS e JavaScript) de um aplicativo
                 <div class="link-card black">
                     <div>
                         <h3 class="link-title">GOOGLE CLOUD TRAINING</h3>
-                        <p class="link-description">Trilhas completas de Machine Learning &amp; AI com skill badges reconhecidos pela indústria.</p>
+                        <p class="link-description">Trilhas completas de Machine Learning & AI com skill badges reconhecidos pela indústria.</p>
                     </div>
                     <a href="https://cloud.google.com/training" target="_blank" class="link-button">Saiba mais</a>
                 </div>
@@ -931,39 +1121,94 @@ Sua tarefa é criar o código completo (HTML, CSS e JavaScript) de um aplicativo
                 </div>
             </div>
         </div>
-            </div>
-        
+    </div>
 
-        <!-- Modal -->
-        <div id="promptModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">Prompt Base</h3>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                <div class="modal-text">Você é um especialista em comunicação digital.Quero que você crie o código completo (HTML + CSS) para uma landing page simples e responsiva.Regras:- A página deve ter um cabeçalho com título e subtítulo.- Um bloco principal com chamada (headline), descrição curta e um botão de call-to-action.- Uma seção secundária com 3 bullets ou cards explicando benefícios.- Rodapé com informações de contato (e-mail e redes sociais).- Use cores modernas, tipografia clara e design limpo.- Entregue o código já pronto para ser copiado e colado no navegador.</div>
-                <button class="copy-modal-btn" onclick="copyBasePrompt(this)">Copiar Prompt Base</button>
+    <!-- Modal -->
+    <div id="promptModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Prompt Base</h3>
+                <button class="close-modal" onclick="closeModal()">×</button>
             </div>
+            <div class="modal-text">Você é um especialista em comunicação digital.Quero que você crie o código completo (HTML + CSS) para uma landing page simples e responsiva.Regras:- A página deve ter um cabeçalho com título e subtítulo.- Um bloco principal com chamada (headline), descrição curta e um botão de call-to-action.- Uma seção secundária com 3 bullets ou cards explicando benefícios.- Rodapé com informações de contato (e-mail e redes sociais).- Use cores modernas, tipografia clara e design limpo.- Entregue o código já pronto para ser copiado e colado no navegador.</div>
+            <button class="copy-modal-btn" onclick="copyBasePrompt(this)">Copiar Prompt Base</button>
         </div>
-    
+    </div>
 
     <script>
+        let currentModule = 1;
+        let isMobileMenuOpen = false;
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            const btn = document.getElementById('mobileMenuBtn');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            if (isMobileMenuOpen) {
+                btn.classList.add('active');
+                overlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            } else {
+                btn.classList.remove('active');
+                overlay.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close mobile menu
+        function closeMobileMenu() {
+            isMobileMenuOpen = false;
+            document.getElementById('mobileMenuBtn').classList.remove('active');
+            document.getElementById('mobileMenuOverlay').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Switch module from mobile menu
+        function switchModuleMobile(moduleNumber) {
+            switchModule(moduleNumber);
+            closeMobileMenu();
+        }
+
+        // Open modal from mobile menu
+        function openModalFromMobile() {
+            closeMobileMenu();
+            openModal();
+        }
+
         // Module switching
         function switchModule(moduleNumber) {
-            // Update body background
-            document.body.className = moduleNumber === 2 ? 'module2' : moduleNumber === 3 ? 'module3' : moduleNumber === 4 ? 'module4' : '';
+            currentModule = moduleNumber;
             
-            // Update active button
-            document.querySelectorAll('.module-btn').forEach((btn, index) => {
+            // Update body background
+            document.body.className = moduleNumber === 2 ? 'module2' : 
+                                     moduleNumber === 3 ? 'module3' : 
+                                     moduleNumber === 4 ? 'module4' : '';
+            
+            // Update active button for desktop
+            document.querySelectorAll('.module-nav .module-btn').forEach((btn, index) => {
                 btn.classList.toggle('active', index === moduleNumber - 1);
             });
             
-            // Show/hide prompt base button (only in module 1)
-            const promptBaseBtn = document.querySelector('.base-prompt-global-btn');
+            // Update active button for mobile
+            document.querySelectorAll('.mobile-menu-overlay .module-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index === moduleNumber - 1);
+            });
+            
+            // Show/hide prompt base button (desktop)
+            const promptBaseBtn = document.querySelector('.module-nav .base-prompt-global-btn');
             if (moduleNumber === 1) {
                 promptBaseBtn.classList.add('show');
             } else {
                 promptBaseBtn.classList.remove('show');
+            }
+            
+            // Show/hide prompt base button (mobile)
+            const mobilePromptBtn = document.querySelector('.mobile-menu-overlay .base-prompt-global-btn');
+            if (moduleNumber === 1) {
+                mobilePromptBtn.style.display = 'block';
+            } else {
+                mobilePromptBtn.style.display = 'none';
             }
             
             // Show/hide content
@@ -1031,8 +1276,15 @@ Sua tarefa é criar o código completo (HTML, CSS e JavaScript) de um aplicativo
         // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('promptModal');
+            const mobileOverlay = document.getElementById('mobileMenuOverlay');
+            
             if (event.target == modal) {
                 closeModal();
+            }
+            
+            // Close mobile menu when clicking overlay background
+            if (event.target == mobileOverlay) {
+                closeMobileMenu();
             }
         }
 
@@ -1051,5 +1303,5 @@ Sua tarefa é criar o código completo (HTML, CSS e JavaScript) de um aplicativo
             });
         });
     </script>
-
-</body></html>
+</body>
+</html>
